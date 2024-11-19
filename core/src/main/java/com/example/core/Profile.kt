@@ -1,6 +1,9 @@
-package com.example.data.local
+package com.example.core
 
-data class User(
+import androidx.room.Entity
+
+@Entity("profile")
+data class Profile(
     val id: Int,
     val name: String,
     val username: String,

@@ -6,5 +6,5 @@ interface UserLocalDataSource {
 
     suspend fun observeUsers(): Flow<List<User>>
 
-    suspend fun obtainSpecificUser(id:String): User
+    suspend fun obtainSpecificUser(id: String): User
 }

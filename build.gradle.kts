@@ -6,6 +6,7 @@ plugins {
     id("org.sonarqube") version "5.1.0.4882"
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.ksp) apply false
 }
 
 sonar {
