@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     alias(libs.plugins.jetbrains.kotlin.jvm)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.spotless)
 }
 
@@ -44,5 +45,6 @@ kotlin {
 
     dependencies {
         implementation(libs.coroutine.core)
+        implementation(project(":domain"))
     }
 }

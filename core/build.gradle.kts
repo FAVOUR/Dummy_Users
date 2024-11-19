@@ -81,10 +81,11 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
 
-    // Hilt
+//    // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
+//    implementation(project(":common"))
 
    // Retrofit
     implementation(libs.retrofit)
