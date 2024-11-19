@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Dummy Users</string>
+    <string name="an_error_occurred">An Error Occurred</string>
 </resources>

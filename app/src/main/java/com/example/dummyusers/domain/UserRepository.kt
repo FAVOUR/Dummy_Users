@@ -6,9 +6,9 @@ interface UserRepository {
 
     fun observeUsersProfile(): Flow<List<UserProfile>>
 
-    suspend fun getUserProfileById(id: String, makeNetworkCallFirst: Boolean): UserProfile?
+    suspend fun getUserProfileById(id: String, makeNetworkCallFirst: Boolean = false): UserProfile?
 
-    suspend fun obtainAllUsersProfile(makeNetworkCallFirst: Boolean): List<UserProfile>
+    suspend fun obtainAllUsersProfile(makeNetworkCallFirst: Boolean = false): List<UserProfile>
 
     suspend fun saveUserProfiles(userProfile: List<UserProfile>)
 
