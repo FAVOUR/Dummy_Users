@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.spotless)
+    alias(libs.plugins.jacoco)
 }
 
 android {
@@ -48,6 +49,42 @@ android {
 
     tasks.named("build") {
         finalizedBy("spotlessCheck")
+    }
+
+    /**
+     * Jacoco
+     */
+
+    tasks.register<JacocoReport>("jacocoTestReport") {
+        group = "Verification"
+        description = "Generates a JaCoCo code coverage report for the debug unit tests."
+
+
+        dependsOn("testDebugUnitTest")
+
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+            csv.required.set(false)
+        }
+
+        val fileFilter = listOf(
+            "**/R.class",
+            "**/R$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+            "**/*Test*.*",
+            "android/**/*.*"
+        )
+
+        val debugTree = fileTree("${getLayout().buildDirectory}/tmp/kotlin-classes/debug") {
+            exclude(fileFilter)
+        }
+        val mainSrc = "src/main/java"
+
+        sourceDirectories.setFrom(files(mainSrc))
+        classDirectories.setFrom(files(debugTree))
+        executionData.setFrom(fileTree(getLayout().buildDirectory).include("jacoco/testDebugUnitTest.exec"))
     }
 
 
