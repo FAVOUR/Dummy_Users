@@ -46,8 +46,9 @@ android {
         }
     }
 
-
-
+    tasks.named("build") {
+        finalizedBy("spotlessCheck")
+    }
 
 
     defaultConfig {
