@@ -8,6 +8,13 @@ android {
     namespace = "com.example.dummyusers"
     compileSdk = 35
 
+    lint {
+        abortOnError = true
+        checkReleaseBuilds = true
+        xmlReport = true
+        htmlReport = true
+    }
+
     defaultConfig {
         applicationId = "com.example.dummyusers"
         minSdk = 24
