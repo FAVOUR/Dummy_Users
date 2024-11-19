@@ -1,16 +1,21 @@
 package com.example.dummyusers.core.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.dummyusers.BuildConfig
+import com.example.dummyusers.core.local.UserDao
+import com.example.dummyusers.core.local.UserDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -58,3 +63,22 @@ class RetrofitModule {
             .build()
     }
 }
+
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
+    @Singleton
+    @Provides
+    fun provideDataBase(@ApplicationContext context: Context): UserDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext, UserDatabase::class.java, "User.db"
+        ).build()
+    }
+
+    @Provides
+    fun provideUserDao(database: UserDatabase): UserDao = database.userDao()
+}
+
+

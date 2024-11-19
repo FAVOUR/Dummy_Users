@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
 
     @Upsert
-    fun addUsers(user: LocalUser)
+    fun addUsers(user: List<LocalUser>)
 
     @Query("SELECT * FROM user")
     fun obtainAllUsers(): List<LocalUser>
@@ -19,4 +19,7 @@ interface UserDao {
 
     @Query("SELECT * FROM user WHERE id == :userId")
     fun obtainUser(userId: String): LocalUser?
+
+    @Query("DELETE FROM user")
+    fun deleteAll()
 }

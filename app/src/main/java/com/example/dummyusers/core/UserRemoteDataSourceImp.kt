@@ -18,6 +18,7 @@ class UserRemoteDataSourceImp @Inject constructor(
     override suspend fun searchUser(userId: String): UserInfo? {
         return usersApi.userById(userId).extractData(retrofit)?.toUserInfo()
     }
+
 }
 
 inline fun <reified T> Response<T>.extractData(retrofitClient: Retrofit): T? {
