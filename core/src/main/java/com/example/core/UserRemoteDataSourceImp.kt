@@ -3,9 +3,9 @@ package com.example.core
 import com.example.core.remote.UsersApi
 import com.example.data.remote.UserInfo
 import com.example.data.remote.UserRemoteDataSource
+import javax.inject.Inject
 import retrofit2.Response
 import retrofit2.Retrofit
-import javax.inject.Inject
 
 class UserRemoteDataSourceImp @Inject constructor(
     private val usersApi: UsersApi,
@@ -18,9 +18,7 @@ class UserRemoteDataSourceImp @Inject constructor(
     override suspend fun searchUser(userId: String): UserInfo? {
         return usersApi.userById(userId).extractData(retrofit)?.toUserInfo()
     }
-
 }
-
 
 inline fun <reified T> Response<T>.extractData(retrofitClient: Retrofit): T? {
     return with(this) {

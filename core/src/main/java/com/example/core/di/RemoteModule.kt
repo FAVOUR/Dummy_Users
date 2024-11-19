@@ -1,20 +1,16 @@
 package com.example.core.di
 
-import com.example.core.UserLocalDatasourceImpl
 import com.example.core.remote.BASE_URL
-import com.example.data.local.UserLocalDataSource
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
-
 
 @Module
 object LoggingInterceptorModule {
@@ -61,8 +57,3 @@ class RetrofitModule {
             .build()
     }
 }
-
-
-
-
-

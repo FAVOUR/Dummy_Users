@@ -14,7 +14,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
@@ -38,6 +37,4 @@ abstract class DataSourceModule {
     @Singleton
     @Binds
     abstract fun bindUserLocalDataSource(dataSource: UserLocalDatasourceImpl): UserLocalDataSource
-
 }
-

@@ -11,5 +11,4 @@ interface UsersApi {
 
     @GET("api/users/{userId}")
     suspend fun userById(@Path("userId") userId: String): Response<RemoteUser>
-
 }

@@ -2,13 +2,42 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.spotless)
 }
 
 android {
     namespace = "com.example.core"
     compileSdk = 35
 
-    defaultConfig {
+/**
+ * Spotless
+ */
+spotless {
+    kotlin {
+        target("src/**/*.kt")
+
+        ktlint("0.44.0").userData(
+            mapOf("android" to "true")
+        )
+    }
+    java {
+        target("src/**/*.java")
+        googleJavaFormat()
+    }
+
+    format("kts") {
+        target("**/*.kts")
+        targetExclude("**/build/**/*.kts")
+    }
+
+}
+
+tasks.named("build") {
+    finalizedBy("spotlessCheck")
+}
+
+
+defaultConfig {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

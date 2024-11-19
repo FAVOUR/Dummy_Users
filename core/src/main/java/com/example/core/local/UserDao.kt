@@ -14,11 +14,9 @@ interface UserDao {
     @Query("SELECT * FROM user")
     fun obtainAllUsers(): List<LocalUser>
 
-    @Query("SELECT * FROM user" )
+    @Query("SELECT * FROM user")
     fun observeAllUsers(): Flow<List<LocalUser>>
 
-    @Query("SELECT * FROM user WHERE id == :userId" )
-    fun obtainUser(userId:String): LocalUser?
-
-
+    @Query("SELECT * FROM user WHERE id == :userId")
+    fun obtainUser(userId: String): LocalUser?
 }
