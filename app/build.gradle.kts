@@ -2,18 +2,53 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.spotless)
 }
 
 android {
     namespace = "com.example.dummyusers"
     compileSdk = 35
 
+    /**
+     * Lint
+     */
     lint {
         abortOnError = true
         checkReleaseBuilds = true
         xmlReport = true
         htmlReport = true
     }
+
+    /**
+     * Spotless
+     */
+    spotless {
+        kotlin {
+            target("src/**/*.kt")
+
+            ktlint("0.44.0").userData(
+                mapOf("android" to "true")
+            )
+        }
+        java {
+            target("src/**/*.java")
+            googleJavaFormat()
+        }
+
+        format("kts") {
+            target("**/*.kts")
+            targetExclude("**/build/**/*.kts")
+        }
+
+        format("xml") {
+            target("**/*.xml")
+            targetExclude("**/build/**/*.xml")
+        }
+    }
+
+
+
+
 
     defaultConfig {
         applicationId = "com.example.dummyusers"
