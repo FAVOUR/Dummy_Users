@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserLocalDataSource {
 
-    suspend fun observeUsers(): Flow<List<User>>
+    suspend fun observeUsers(): Flow<List<UsersData>>
 
-    suspend fun obtainSpecificUser(id: String): User
+    suspend fun obtainSpecificUser(id: String): UsersData?
 }

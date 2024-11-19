@@ -1,14 +1,14 @@
-package com.example.data.local
+package com.example.core.remote
 
-data class User(
+data class RemoteUser(
     val id: Int,
     val name: String,
     val username: String,
     val email: String,
-    val residence: Residence
+    val address: Address
 )
 
-data class Residence(
+data class Address(
     val street: String,
     val city: String,
     val state: String,

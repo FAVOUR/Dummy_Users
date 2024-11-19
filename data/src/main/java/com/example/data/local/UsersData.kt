@@ -1,9 +1,6 @@
-package com.example.core
+package com.example.data.local
 
-import androidx.room.Entity
-
-@Entity("profile")
-data class Profile(
+data class UsersData(
     val id: Int,
     val name: String,
     val username: String,

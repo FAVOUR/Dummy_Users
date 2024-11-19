@@ -5,10 +5,10 @@ data class UserInfo(
     val name: String,
     val username: String,
     val email: String,
-    val address: Address
+    val homeDetails: HomeDetails
 )
 
-data class Address(
+data class HomeDetails(
     val street: String,
     val city: String,
     val state: String,

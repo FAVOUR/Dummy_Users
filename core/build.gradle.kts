@@ -46,6 +46,16 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
 
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+
+
+   // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.gson.converter.factory)
+    implementation(libs.okhttp.logging.interceptor)
+
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
