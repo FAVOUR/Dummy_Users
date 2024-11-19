@@ -42,6 +42,12 @@ defaultConfig {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+       buildConfigField("String", "BASE_URL", "\"https://dummyapi.online/\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {

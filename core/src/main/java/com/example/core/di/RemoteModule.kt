@@ -1,6 +1,6 @@
 package com.example.core.di
 
-import com.example.core.remote.BASE_URL
+import com.example.core.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
+@InstallIn(SingletonComponent::class)
 object LoggingInterceptorModule {
 
     @Provides
@@ -38,7 +39,7 @@ class RetrofitModule {
     @Provides
     fun retrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
