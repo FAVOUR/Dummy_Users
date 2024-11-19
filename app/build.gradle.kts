@@ -48,7 +48,7 @@ android {
     }
 
     tasks.named("build") {
-        finalizedBy("spotlessCheck")
+        finalizedBy("spotlessApply")
     }
 
     /**
