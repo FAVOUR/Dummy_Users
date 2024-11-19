@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Dummy Users"
 include(":app")
- 
+include(":data")
+
