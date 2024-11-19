@@ -1,6 +1,5 @@
 package com.example.dummyusers.data.local
 
-import com.example.dummyusers.data.remote.UserInfo
 import kotlinx.coroutines.flow.Flow
 
 interface UserLocalDataSource {

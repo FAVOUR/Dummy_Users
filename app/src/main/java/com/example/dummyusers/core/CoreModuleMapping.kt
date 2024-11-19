@@ -40,6 +40,3 @@ fun List<RemoteUser>.toUserInfo() = map(RemoteUser::toUserInfo)
 private fun Address.toHomeDetails(): HomeDetails {
     return HomeDetails(street = street, city = city, state = state, zipcode = zipcode)
 }
-
-
-

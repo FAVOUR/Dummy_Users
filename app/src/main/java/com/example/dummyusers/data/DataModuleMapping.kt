@@ -25,7 +25,6 @@ private fun Residence.toUserLocation(): UserLocation {
     return UserLocation(street = street, city = city, state = state, zipcode = zipcode)
 }
 
-
 fun UserProfile.toUserData() =
     UsersData(
         id = id,
@@ -50,10 +49,8 @@ private fun UsersData.toLocalData() = LocalUser(
     userLocationData = residence.toUserLocationData()
 )
 
-
 @JvmName("UserDataToLocalData")
 fun List<UsersData>.toLocalData() = map(UsersData::toLocalData)
-
 
 private fun Residence.toUserLocationData(): UserLocationData {
     return UserLocationData(street = street, city = city, state = state, zipcode = zipcode)
@@ -68,8 +65,8 @@ fun UserInfo.toUserData() =
         residence = homeDetails.toResidence()
     )
 
-  @JvmName("UserInfoTotoUserData")
-  fun List<UserInfo>.toUserData() = map(UserInfo::toUserData)
+@JvmName("UserInfoTotoUserData")
+fun List<UserInfo>.toUserData() = map(UserInfo::toUserData)
 
 private fun HomeDetails.toResidence(): Residence {
     return Residence(street = street, city = city, state = state, zipcode = zipcode)

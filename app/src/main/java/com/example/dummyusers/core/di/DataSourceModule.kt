@@ -22,5 +22,3 @@ abstract class DataSourceModule {
     @Binds
     abstract fun bindUserRemoteDataSource(dataSource: UserRemoteDataSourceImp): UserRemoteDataSource
 }
-
-

@@ -5,11 +5,11 @@ import com.example.dummyusers.data.local.UserLocalDataSource
 import com.example.dummyusers.data.remote.UserRemoteDataSource
 import com.example.dummyusers.domain.UserProfile
 import com.example.dummyusers.domain.UserRepository
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class UserRepositoryImp @Inject constructor(
     private val localDataSource: UserLocalDataSource,
@@ -51,7 +51,6 @@ class UserRepositoryImp @Inject constructor(
         localDataSource.saveUserData(userData)
     }
 
-
     override suspend fun refresh() {
         withContext(dispatcher) {
             val remoteUsers = remoteDataSource.fetchUsers()
@@ -59,7 +58,6 @@ class UserRepositoryImp @Inject constructor(
             remoteUsers?.let { userInfo ->
                 localDataSource.saveUserData(userInfo.toUserData())
             }
-
         }
     }
 }
