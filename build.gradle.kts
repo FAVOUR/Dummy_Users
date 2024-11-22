@@ -13,8 +13,14 @@ plugins {
 
 sonar {
     properties {
-        property ("sonar.projectKey", "FAVOUR_Dummy_Users")
-        property ("sonar.organization", "favour")
-        property ("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.projectKey", "FAVOUR_Dummy_Users")
+        property("sonar.organization", "favour")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.java.coveragePlugin", "jacoco")
+        property(
+            "sonar.coverage.jacoco.xmlReportPaths",
+            "${project.projectDir}/build/reports/jacoco/test/jacocoTestReport.xml"
+        )
+
     }
 }

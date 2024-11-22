@@ -235,6 +235,56 @@ class UserRepositoryImpTest {
     }
 
     @Test
+    fun storeAUser_updateARecord() = testScope.runTest {
+
+        // Given a new UserProfile
+        val aDataStoredInDb = usersData1.toUserProfile()
+        val newUserProfile = userInfo1.toUserProfile()
+
+        //When the original earlier userData is gotten
+        val initialUser = userRepository.getUserProfileById(aDataStoredInDb.id)
+
+        //Then verify that that the size is 2, ID and username are similar
+        assertThat(userRepository.obtainAllUsersProfile().size).isEqualTo(2)
+        assertThat(initialUser?.id).isEqualTo(aDataStoredInDb.id)
+        assertThat(initialUser?.username).isEqualTo(aDataStoredInDb.username)
+
+        // When a newUser is saved to the UserRepository and the sameId Is used to fetch
+        userRepository.storeAUser(newUserProfile)
+        val updatedUser = userRepository.getUserProfileById(aDataStoredInDb.id)
+
+        //Then verify that that the size still remains 2, ID and username are updated
+        assertThat(userRepository.obtainAllUsersProfile().size).isEqualTo(2)
+        assertThat(updatedUser?.username).isEqualTo(newUserProfile.username)
+        assertThat(updatedUser?.id).isEqualTo(newUserProfile.id)
+    }
+
+
+    @Test
+    fun updateUsers_addAUserAndUpdateDbWithAnExistingDB() = testScope.runTest {
+
+        // Given a new UserProfile
+        val newRecord = newUserInfo.toUserProfile()
+
+        //When all users are obtained
+        userRepository.storeAUser(newRecord)
+       val allUsersStored =  userRepository.obtainAllUsersProfile()
+
+        //Then verify that that the size is 3
+        assertThat(allUsersStored.size).isEqualTo(3)
+
+        // When the user is updated after clearing the db
+        userRepository.updateUsers(true)
+
+        //Then verify that that the size is 2 because the data has been deleted
+        assertThat(userRepository.obtainAllUsersProfile().size).isEqualTo(2)
+
+    }
+
+
+
+
+    @Test
     fun saveUserProfiles_addToExistingRecord() = testScope.runTest {
 
         // Given a new UserProfile

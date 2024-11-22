@@ -159,12 +159,8 @@ dependencies {
 
 
     // Dependencies for local unit tests
-//    testImplementation(composeBom)
     testImplementation(libs.junit)
-//    testImplementation(libs.junit4)
-//    testImplementation(libs.androidx.archcore.testing)
     testImplementation(libs.kotlinx.coroutines.test)
-//    testImplementation(libs.kotlinx.coroutines.android)
     testImplementation(libs.google.truth)
 
 
