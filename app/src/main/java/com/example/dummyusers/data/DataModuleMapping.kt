@@ -18,7 +18,7 @@ fun UsersData.toUserProfile() =
         userLocation = residence.toUserLocation()
     )
 
-@JvmName("UserDataToUserProfile")
+@JvmName("userDataToUserProfile")
 fun List<UsersData>.toUserProfile() = map(UsersData::toUserProfile)
 
 private fun Residence.toUserLocation(): UserLocation {
@@ -34,14 +34,14 @@ fun UserProfile.toUserData() =
         residence = userLocation.toResidence()
     )
 
-@JvmName("UserProfileToUserData")
+@JvmName("userProfileToUserData")
 fun List<UserProfile>.toUserData() = map(UserProfile::toUserData)
 
 private fun UserLocation.toResidence(): Residence {
     return Residence(street = street, city = city, state = state, zipcode = zipcode)
 }
 
-private fun UsersData.toLocalData() = LocalUser(
+fun UsersData.toLocalData() = LocalUser(
     id = id,
     name = name,
     username = username,
@@ -49,14 +49,14 @@ private fun UsersData.toLocalData() = LocalUser(
     userLocationData = residence.toUserLocationData()
 )
 
-@JvmName("UserDataToLocalData")
+@JvmName("userDataToLocalData")
 fun List<UsersData>.toLocalData() = map(UsersData::toLocalData)
 
 private fun Residence.toUserLocationData(): UserLocationData {
     return UserLocationData(street = street, city = city, state = state, zipcode = zipcode)
 }
 
-fun UserInfo.toUserData() =
+private fun UserInfo.toUserData() =
     UsersData(
         id = id,
         name = name,
@@ -65,9 +65,28 @@ fun UserInfo.toUserData() =
         residence = homeDetails.toResidence()
     )
 
-@JvmName("UserInfoTotoUserData")
+@JvmName("userInfoTotoUserData")
 fun List<UserInfo>.toUserData() = map(UserInfo::toUserData)
 
 private fun HomeDetails.toResidence(): Residence {
     return Residence(street = street, city = city, state = state, zipcode = zipcode)
+}
+
+
+fun UserInfo.toUserProfile() =
+    UserProfile(
+        id = id,
+        name = name,
+        username = username,
+        email = email,
+        userLocation = homeDetails.toUserLocation()
+    )
+
+
+@JvmName("userInfoToUserProfile")
+fun List<UserInfo>.toUserProfile() = map(UserInfo::toUserProfile)
+
+
+private fun HomeDetails.toUserLocation(): UserLocation {
+    return UserLocation(street = street, city = city, state = state, zipcode = zipcode)
 }

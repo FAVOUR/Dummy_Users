@@ -6,11 +6,15 @@ interface UserRepository {
 
     fun observeUsersProfile(): Flow<List<UserProfile>>
 
-    suspend fun getUserProfileById(id: String, makeNetworkCallFirst: Boolean = false): UserProfile?
+    suspend fun getUserProfileById(id: Int, makeNetworkCallFirst: Boolean = false): UserProfile?
 
-    suspend fun obtainAllUsersProfile(makeNetworkCallFirst: Boolean = false): List<UserProfile>
+    suspend fun obtainAllUsersProfile(makeNetworkCallFirst: Boolean = false,deleteExistingRecord:Boolean = false): List<UserProfile>
 
-    suspend fun saveUserProfiles(userProfile: List<UserProfile>)
+    suspend fun saveUserProfiles(userProfile: List<UserProfile>,deleteExistingRecord:Boolean = false)
 
-    suspend fun refresh()
+    suspend fun storeAUser(userProfile:UserProfile)
+
+    suspend fun updateUsers(clearDatabase:Boolean)
+
+    suspend fun deleteAllUsers()
 }

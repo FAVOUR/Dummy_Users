@@ -6,11 +6,13 @@ interface UserLocalDataSource {
 
     fun observeUsers(): Flow<List<UsersData>>
 
-    suspend fun obtainSpecificUser(id: String): UsersData?
+    suspend fun obtainSpecificUser(id: Int): UsersData?
 
     suspend fun obtainUserData(): List<UsersData>
 
     suspend fun saveUserData(usersData: List<UsersData>)
+
+    suspend fun saveAUserData(usersData: UsersData)
 
     suspend fun deleteUserData()
 }

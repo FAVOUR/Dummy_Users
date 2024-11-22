@@ -5,11 +5,11 @@ import com.example.dummyusers.data.local.UserLocalDataSource
 import com.example.dummyusers.data.remote.UserRemoteDataSource
 import com.example.dummyusers.domain.UserProfile
 import com.example.dummyusers.domain.UserRepository
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class UserRepositoryImp @Inject constructor(
     private val localDataSource: UserLocalDataSource,
@@ -25,18 +25,24 @@ class UserRepositoryImp @Inject constructor(
     }
 
     override suspend fun getUserProfileById(
-        id: String,
+        id: Int,
         makeNetworkCallFirst: Boolean
     ): UserProfile? {
         if (makeNetworkCallFirst) {
-            refresh()
+            val remoteUser = remoteDataSource.searchUser(id.toString())
+            remoteUser?.let {
+                storeAUser(it.toUserProfile())
+            }
         }
         return localDataSource.obtainSpecificUser(id)?.toUserProfile()
     }
 
-    override suspend fun obtainAllUsersProfile(makeNetworkCallFirst: Boolean): List<UserProfile> {
+    override suspend fun obtainAllUsersProfile(
+        makeNetworkCallFirst: Boolean,
+        deleteExistingRecord: Boolean
+    ): List<UserProfile> {
         if (makeNetworkCallFirst) {
-            refresh()
+            updateUsers(deleteExistingRecord)
         }
 
         return localDataSource.obtainUserData().map { users ->
@@ -46,18 +52,38 @@ class UserRepositoryImp @Inject constructor(
         }
     }
 
-    override suspend fun saveUserProfiles(userProfile: List<UserProfile>) {
-        val userData = userProfile.toUserData()
-        localDataSource.saveUserData(userData)
-    }
-
-    override suspend fun refresh() {
+    override suspend fun saveUserProfiles(
+        userProfile: List<UserProfile>,
+        deleteExistingRecord: Boolean
+    ) {
         withContext(dispatcher) {
-            val remoteUsers = remoteDataSource.fetchUsers()
-            localDataSource.deleteUserData()
-            remoteUsers?.let { userInfo ->
-                localDataSource.saveUserData(userInfo.toUserData())
+            val userData = userProfile.toUserData()
+
+            if (deleteExistingRecord) {
+                localDataSource.deleteUserData()
+            }
+            userData.let { userInfo ->
+                localDataSource.saveUserData(userInfo)
             }
         }
     }
+
+    override suspend fun storeAUser(userProfile: UserProfile) {
+        val userData = userProfile.toUserData()
+        localDataSource.saveAUserData(userData)
+
+    }
+
+    override suspend fun updateUsers(clearDatabase: Boolean) {
+        val remoteUsers = remoteDataSource.fetchUsers()
+        remoteUsers?.let { usersFetchedRemotely ->
+            saveUserProfiles(usersFetchedRemotely.toUserProfile(), clearDatabase)
+        }
+    }
+
+    override suspend fun deleteAllUsers() {
+        localDataSource.deleteUserData()
+    }
+
+
 }

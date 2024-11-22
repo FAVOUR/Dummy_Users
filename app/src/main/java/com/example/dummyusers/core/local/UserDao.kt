@@ -6,10 +6,14 @@ import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 @Dao
+
 interface UserDao {
 
     @Upsert
-    fun addUsers(user: List<LocalUser>)
+    fun upsertUsers(user: List<LocalUser>)
+
+    @Upsert
+    fun upsertUser(user: LocalUser)
 
     @Query("SELECT * FROM user")
     fun obtainAllUsers(): List<LocalUser>
@@ -18,7 +22,7 @@ interface UserDao {
     fun observeAllUsers(): Flow<List<LocalUser>>
 
     @Query("SELECT * FROM user WHERE id == :userId")
-    fun obtainUser(userId: String): LocalUser?
+    fun obtainUser(userId: Int): LocalUser?
 
     @Query("DELETE FROM user")
     fun deleteAll()

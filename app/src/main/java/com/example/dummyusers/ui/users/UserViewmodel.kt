@@ -38,7 +38,7 @@ class UserViewmodel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            userRepository.refresh()
+            userRepository.obtainAllUsersProfile(true,false)
         }
     }
 

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.spotless)
     alias(libs.plugins.jacoco)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -157,7 +158,17 @@ dependencies {
     implementation(libs.gson.converter.factory)
 
 
+    // Dependencies for local unit tests
+//    testImplementation(composeBom)
     testImplementation(libs.junit)
+//    testImplementation(libs.junit4)
+//    testImplementation(libs.androidx.archcore.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+//    testImplementation(libs.kotlinx.coroutines.android)
+    testImplementation(libs.google.truth)
+
+
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

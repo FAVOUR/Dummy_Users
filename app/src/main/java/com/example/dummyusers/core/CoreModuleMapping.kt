@@ -18,7 +18,7 @@ fun LocalUser.toUserData() =
         residence = userLocationData.toResidence()
     )
 
-@JvmName("LocalToUserData")
+@JvmName("localToUserData")
 fun List<LocalUser>.toUserData() = map(LocalUser::toUserData)
 
 private fun UserLocationData.toResidence(): Residence {
@@ -34,7 +34,7 @@ fun RemoteUser.toUserInfo() =
         homeDetails = address.toHomeDetails()
     )
 
-@JvmName("RemoteUserToUserInfo")
+@JvmName("remoteUserToUserInfo")
 fun List<RemoteUser>.toUserInfo() = map(RemoteUser::toUserInfo)
 
 private fun Address.toHomeDetails(): HomeDetails {

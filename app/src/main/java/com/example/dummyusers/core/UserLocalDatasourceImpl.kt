@@ -4,9 +4,9 @@ import com.example.dummyusers.core.local.UserDao
 import com.example.dummyusers.data.local.UserLocalDataSource
 import com.example.dummyusers.data.local.UsersData
 import com.example.dummyusers.data.toLocalData
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class UserLocalDatasourceImpl @Inject constructor(
     private val userDao: UserDao,
@@ -18,7 +18,7 @@ class UserLocalDatasourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun obtainSpecificUser(id: String): UsersData? {
+    override suspend fun obtainSpecificUser(id: Int): UsersData? {
         return userDao.obtainUser(id)?.toUserData()
     }
 
@@ -28,7 +28,13 @@ class UserLocalDatasourceImpl @Inject constructor(
 
     override suspend fun saveUserData(usersData: List<UsersData>) {
         with(usersData.toLocalData()) {
-            userDao.addUsers(this)
+            userDao.upsertUsers(this)
+        }
+    }
+
+    override suspend fun saveAUserData(usersData: UsersData) {
+        with(usersData.toLocalData()) {
+            userDao.upsertUser(this)
         }
     }
 
