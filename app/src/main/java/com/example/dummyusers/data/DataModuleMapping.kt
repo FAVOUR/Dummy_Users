@@ -66,7 +66,7 @@ private fun UserInfo.toUserData() =
     )
 
 @JvmName("userInfoTotoUserData")
-fun List<UserInfo>.toUserData() = map(UserInfo::toUserData)
+private fun List<UserInfo>.toUserData() = map(UserInfo::toUserData)
 
 private fun HomeDetails.toResidence(): Residence {
     return Residence(street = street, city = city, state = state, zipcode = zipcode)
