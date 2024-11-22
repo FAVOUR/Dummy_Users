@@ -72,7 +72,6 @@ private fun HomeDetails.toResidence(): Residence {
     return Residence(street = street, city = city, state = state, zipcode = zipcode)
 }
 
-
 fun UserInfo.toUserProfile() =
     UserProfile(
         id = id,
@@ -82,10 +81,8 @@ fun UserInfo.toUserProfile() =
         userLocation = homeDetails.toUserLocation()
     )
 
-
 @JvmName("userInfoToUserProfile")
 fun List<UserInfo>.toUserProfile() = map(UserInfo::toUserProfile)
-
 
 private fun HomeDetails.toUserLocation(): UserLocation {
     return UserLocation(street = street, city = city, state = state, zipcode = zipcode)

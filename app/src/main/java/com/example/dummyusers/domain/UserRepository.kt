@@ -8,13 +8,19 @@ interface UserRepository {
 
     suspend fun getUserProfileById(id: Int, makeNetworkCallFirst: Boolean = false): UserProfile?
 
-    suspend fun obtainAllUsersProfile(makeNetworkCallFirst: Boolean = false,deleteExistingRecord:Boolean = false): List<UserProfile>
+    suspend fun obtainAllUsersProfile(
+        makeNetworkCallFirst: Boolean = false,
+        deleteExistingRecord: Boolean = false
+    ): List<UserProfile>
 
-    suspend fun saveUserProfiles(userProfile: List<UserProfile>,deleteExistingRecord:Boolean = false)
+    suspend fun saveUserProfiles(
+        userProfile: List<UserProfile>,
+        deleteExistingRecord: Boolean = false
+    )
 
-    suspend fun storeAUser(userProfile:UserProfile)
+    suspend fun storeAUser(userProfile: UserProfile)
 
-    suspend fun updateUsers(clearDatabase:Boolean)
+    suspend fun updateUsers(clearDatabase: Boolean)
 
     suspend fun deleteAllUsers()
 }

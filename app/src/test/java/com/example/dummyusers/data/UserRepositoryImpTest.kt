@@ -14,7 +14,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
-
 @ExperimentalCoroutinesApi
 class UserRepositoryImpTest {
 
@@ -69,7 +68,6 @@ class UserRepositoryImpTest {
     )
     private val allNewUserInfo = listOf(newUserInfo)
 
-
     private val remoteUsers = listOf(userInfo1, userInfo2)
     private val localUsers = listOf(usersData1, userData2)
 
@@ -99,42 +97,39 @@ class UserRepositoryImpTest {
 
     @Test
     fun obtainAllUsersProfile_RepositoryHasEmptyLocalAndRemoteDatasource() = testScope.runTest {
-        //given An Empty Local And Remote Datasource
+        // given An Empty Local And Remote Datasource
         userRemoteDataSource.userInfo?.clear()
         userLocalDatasource.deleteUserData()
 
-        //When obtainAllUsersProfile is triggered
+        // When obtainAllUsersProfile is triggered
         val userProfiles = userRepository.obtainAllUsersProfile(deleteExistingRecord = true)
 
-        //Then the total users is zero
+        // Then the total users is zero
         assertThat(userProfiles.size).isEqualTo(0)
     }
-
 
     @Test
     fun obtainAllUsersProfile_fetchFromServerAndNotDeleteExistingData() = testScope.runTest {
 
-        //When obtainAllUsersProfile is triggered
+        // When obtainAllUsersProfile is triggered
         val userProfiles = userRepository.obtainAllUsersProfile(makeNetworkCallFirst = true)
 
-        //Assert That the total users are 2
+        // Assert That the total users are 2
         assertThat(userProfiles.size).isEqualTo(2)
     }
-
 
     @Test
     fun obtainAllUsersProfile_obtainOnlyDataAlreadyStored() = testScope.runTest {
 
-        //Given data already in the database
+        // Given data already in the database
         val users = localUsers
 
-        //When obtainAllUsersProfile is triggered
+        // When obtainAllUsersProfile is triggered
         val userProfiles = userRepository.obtainAllUsersProfile()
 
-        //Then assert that the total users is zero
+        // Then assert that the total users is zero
         assertThat(userProfiles[0].name).isEqualTo(users[0].name)
     }
-
 
     @Test
     fun obtainAllUsersProfile_repositoryStoresAfterGettingUserFromServer() = testScope.runTest {
@@ -149,7 +144,7 @@ class UserRepositoryImpTest {
         // Load the users again without forcing an update and deleting existing records
         val second = userRepository.obtainAllUsersProfile(false)
 
-        //Then assert that the first users emails are the same
+        // Then assert that the first users emails are the same
         assertThat(second[0].name).isEqualTo(first[0].name)
     }
 
@@ -167,7 +162,6 @@ class UserRepositoryImpTest {
         // Then assert that the 1st emails are the same
         assertThat(users[0].email).isEqualTo(allUsers[0].email)
     }
-
 
     @Test(expected = Exception::class)
     fun obtainAllUsersProfile_prePopulatedLocalDatasourceRemoteUnavailable() = testScope.runTest {
@@ -188,7 +182,7 @@ class UserRepositoryImpTest {
         // When users are not requested from the server the userRepo fetches from the localDataSrc
         val datsFormLocalDataSource = userRepository.obtainAllUsersProfile()
 
-        //Then confirm the username of the first item stored and retrieved are the same
+        // Then confirm the username of the first item stored and retrieved are the same
         assertThat(datsFormLocalDataSource[0].username).isEqualTo(localUsers[0].username)
     }
 
@@ -202,13 +196,12 @@ class UserRepositoryImpTest {
         userRepository.obtainAllUsersProfile()
 
         // Then throw an exception
-
     }
 
     @Test
     fun getUserProfileById_fetchFromServerAndNotDeleteExistingData() = testScope.runTest {
 
-        //Given a user,userId and instantiating the DB
+        // Given a user,userId and instantiating the DB
         val userData = mutableListOf(usersData1)
         val userId = userInfo1.id
         userLocalDatasource = UserLocalDatasourceFake(userData)
@@ -226,59 +219,55 @@ class UserRepositoryImpTest {
         assertThat(secondResult?.username).isEqualTo(firstResult?.username)
     }
 
-
     @Test
     fun getUserProfileById_makeNetworkCallWithId() = testScope.runTest {
-        //Given a user,userId and passing it into the remoteDataSource
+        // Given a user,userId and passing it into the remoteDataSource
         val userData = userInfo1
         val userId = userInfo1.id
         userRemoteDataSource.userInfo = mutableListOf(userData)
 
-        //When network call is made to pull a specific user
+        // When network call is made to pull a specific user
         val result = userRepository.getUserProfileById(userId, makeNetworkCallFirst = true)
 
-        //Confirm the id's are similar and the db and likewise the userName
+        // Confirm the id's are similar and the db and likewise the userName
         assertThat(result?.id).isEqualTo(userId)
         assertThat(userData.username).isEqualTo(result?.username)
-
     }
-
 
     @Test
     fun saveUserProfiles_addToExistingRecord() = testScope.runTest {
 
-        //Given a new UserProfile
+        // Given a new UserProfile
         val userProfile = allNewUserInfo.toUserProfile()
 
         // When a newUser is saved to the UserRepository
         userRepository.saveUserProfiles(userProfile)
 
         // Then Assert that it the only user is stored in the localDataSource
-        assertThat(userLocalDatasource.userData?.size).isEqualTo(3)
-        assertThat(userLocalDatasource.userData?.firstOrNull { it.id == newUserInfo.id }).isNotNull()
+        val localUserData = userLocalDatasource.userData
+        assertThat(localUserData?.size).isEqualTo(3)
+        assertThat(localUserData?.firstOrNull { it.id == newUserInfo.id }).isNotNull()
     }
-
 
     @Test
     fun saveUserProfiles_deleteBeforeSavingToLocal() = testScope.runTest {
 
-        //Given new UserProfile and that the record should be deleted
+        // Given new UserProfile and that the record should be deleted
         val userProfile = allNewUserInfo.toUserProfile()
         val shouldDeleteRecord = true
 
         // When a user is saved to the usersRepository
         userRepository.saveUserProfiles(userProfile, shouldDeleteRecord)
 
-
         // Then confirm that only one user is stored in the localDataSrc and it is the one inserted
-        assertThat(userLocalDatasource.userData?.size).isEqualTo(1)
-        assertThat(userLocalDatasource.userData?.firstOrNull { it.id == newUserInfo.id }).isNotNull()
+        val localUserData = userLocalDatasource.userData
+        assertThat(localUserData?.size).isEqualTo(1)
+        assertThat(localUserData?.firstOrNull { it.id == newUserInfo.id }).isNotNull()
     }
-
 
     @Test
     fun deleteAllUsers_checkContentOfDb_DeleteAndCheck() = testScope.runTest {
-        //When all users are fetched
+        // When all users are fetched
         val initialUsers = userRepository.obtainAllUsersProfile()
 
         // Then verify the size is 2 which is the default size of data inserted
@@ -291,7 +280,4 @@ class UserRepositoryImpTest {
         val usersAfterClearingDb = userRepository.obtainAllUsersProfile()
         assertThat(usersAfterClearingDb).isEmpty()
     }
-
 }
-
-

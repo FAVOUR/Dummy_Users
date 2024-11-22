@@ -5,11 +5,11 @@ import com.example.dummyusers.data.local.UserLocalDataSource
 import com.example.dummyusers.data.remote.UserRemoteDataSource
 import com.example.dummyusers.domain.UserProfile
 import com.example.dummyusers.domain.UserRepository
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class UserRepositoryImp @Inject constructor(
     private val localDataSource: UserLocalDataSource,
@@ -71,7 +71,6 @@ class UserRepositoryImp @Inject constructor(
     override suspend fun storeAUser(userProfile: UserProfile) {
         val userData = userProfile.toUserData()
         localDataSource.saveAUserData(userData)
-
     }
 
     override suspend fun updateUsers(clearDatabase: Boolean) {
@@ -84,6 +83,4 @@ class UserRepositoryImp @Inject constructor(
     override suspend fun deleteAllUsers() {
         localDataSource.deleteUserData()
     }
-
-
 }

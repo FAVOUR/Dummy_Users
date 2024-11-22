@@ -4,7 +4,6 @@ import com.example.dummyusers.data.local.UserLocalDataSource
 import com.example.dummyusers.data.local.UsersData
 import kotlinx.coroutines.flow.Flow
 
-
 class UserLocalDatasourceFake(initialUserData: List<UsersData>? = emptyList()) :
     UserLocalDataSource {
 
@@ -25,14 +24,13 @@ class UserLocalDatasourceFake(initialUserData: List<UsersData>? = emptyList()) :
     }
 
     override suspend fun obtainSpecificUser(id: Int): UsersData? {
-        val user =  _userData?.get(id)
+        val user = _userData?.get(id)
         return user
     }
 
     override suspend fun obtainUserData(): List<UsersData> {
         return userData ?: throw Exception("UserData null")
     }
-
 
     override suspend fun saveUserData(usersData: List<UsersData>) {
         _userData?.putAll(usersData.associateBy { it.id })
@@ -47,5 +45,4 @@ class UserLocalDatasourceFake(initialUserData: List<UsersData>? = emptyList()) :
     override suspend fun deleteUserData() {
         _userData?.clear()
     }
-
 }

@@ -4,9 +4,9 @@ import com.example.dummyusers.core.local.UserDao
 import com.example.dummyusers.data.local.UserLocalDataSource
 import com.example.dummyusers.data.local.UsersData
 import com.example.dummyusers.data.toLocalData
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 class UserLocalDatasourceImpl @Inject constructor(
     private val userDao: UserDao,
